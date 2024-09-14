@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useAuth } from "../services/AuthContext";
-// import Swal from "sweetalert2"; 
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -46,15 +45,6 @@ const LoginPage = () => {
               setTimeout(() => {
                 navigate("/dashboard");
               }, 2000);
-
-            // Swal.fire({
-            //     title: "Success",
-            //     text: "You have successfully logged in!",
-            //     icon: "success",
-            //     confirmButtonText: "OK",
-            //   }).then(() => {
-            //     navigate("/dashboard"); // Navigate to the dashboard after login
-            //   });
         } else {
             toast.error("Invalid email or password. Please try again.", {
                 position: "top-right",
@@ -67,12 +57,6 @@ const LoginPage = () => {
                 theme: "colored",
                 transition: Bounce,
               });
-            // Swal.fire({
-            //     title: "Error",
-            //     text: "Invalid email or password. Please try again.",
-            //     icon: "error",
-            //     confirmButtonText: "OK",
-            //   });
             setSubmitting(false); // Stop the form from submitting
         }
         
