@@ -48,7 +48,7 @@ To get started, clone this repository and install the dependencies:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/react-todo-dashboard.git
+git clone https://github.com/Kaushallaya/ToDo_app_vite_taildwind.git
 
 # Navigate into the project directory
 cd react-todo-dashboard/Training_project_2
