@@ -65,8 +65,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      {/* Logout Button at the top-right corner */}
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-8">
+      {/* Logout Button */}
       <div className="flex justify-end mb-6">
         <button
           onClick={handleLogout}
@@ -76,10 +76,12 @@ const Dashboard = () => {
         </button>
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">To-Do List</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center sm:text-left">
+        To-Do List
+      </h1>
 
-      {/* Form for adding a new todo */}
-      <div className="space-y-4 mb-6">
+      {/* Add Todo Form */}
+      <div className="space-y-4 mb-6 max-w-lg mx-auto">
         <input
           type="text"
           value={title}
@@ -101,16 +103,13 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* List of todos */}
-      <ul className="space-y-4">
+      {/* List of Todos */}
+      <ul className="space-y-4 max-w-lg mx-auto">
         {todos.length === 0 ? (
-          <p className="text-gray-600">No tasks added yet.</p>
+          <p className="text-gray-600 text-center">No tasks added yet.</p>
         ) : (
           todos.map((todo, index) => (
-            <li
-              key={index}
-              className="p-4 bg-white shadow-sm rounded-lg"
-            >
+            <li key={index} className="p-4 bg-white shadow-sm rounded-lg">
               {editIndex === index ? (
                 <div className="space-y-2">
                   <input
@@ -152,12 +151,10 @@ const Dashboard = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h2 className="text-xl font-semibold">{todo.title}</h2>
-                    <p className="text-gray-600">
-                      {todo.description || "No description"}
-                    </p>
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                  <div className="flex-1 mb-2 sm:mb-0">
+                    <h2 className="text-lg sm:text-xl font-semibold">{todo.title}</h2>
+                    <p className="text-gray-600">{todo.description || "No description"}</p>
                     <span
                       className={`mt-2 inline-block px-2 py-1 text-sm font-semibold ${
                         todo.completed
@@ -177,7 +174,7 @@ const Dashboard = () => {
                           : "bg-green-500 text-white hover:bg-green-600"
                       }`}
                     >
-                      {todo.completed ? "Mark as Incomplete" : "Mark as Completed"}
+                      {todo.completed ? "Incomplete" : "Completed"}
                     </button>
                     {!todo.completed && (
                       <button
