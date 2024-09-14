@@ -74,6 +74,12 @@ This will start the application in development mode, and you can view it in the 
 ```
 http://localhost:3000
 ```
+Use below user details for login
+
+```
+user Name : user@example.com
+Password : password
+```
 
 ## Project Structure
 
