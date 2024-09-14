@@ -1,36 +1,27 @@
-import React,{ useState } from "react";
-import { useAuth } from "../services/AuthContext";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-// const Dashboard = () => {
-//   const { user, logout } = useAuth();
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-//       <div className="text-center">
-//         <h1 className="text-3xl font-bold">Welcome, {user.email}!</h1>
-//         <button
-//           onClick={logout}
-//           className="mt-4 px-4 py-2 bg-red-600 text-white rounded"
-//         >
-//           Logout
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+import { useAuth } from "../services/AuthContext";
 
 const Dashboard = () => {
-  const { logout } = useAuth();  // Using logout function from AuthContext
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
-  // State for managing To-Do List
-  const [todos, setTodos] = useState([]);
+  // Load initial todos from localStorage or default to an empty array
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [editIndex, setEditIndex] = useState(null);
+  const [editIndex, setEditIndex] = useState(null); // Track the index of the todo being edited
 
-  // Handle adding a new task
+  // Save todos to localStorage whenever the todos array changes
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  // Handle adding a new todo
   const handleAddTodo = () => {
     if (title.trim()) {
       const newTodo = {
@@ -44,7 +35,7 @@ const Dashboard = () => {
     }
   };
 
-  // Handle toggling task completion
+  // Handle toggling todo completion status
   const toggleTodoCompletion = (index) => {
     const updatedTodos = todos.map((todo, i) =>
       i === index ? { ...todo, completed: !todo.completed } : todo
@@ -52,7 +43,7 @@ const Dashboard = () => {
     setTodos(updatedTodos);
   };
 
-  // Handle deleting a task
+  // Handle deleting a todo
   const handleDeleteTodo = (index) => {
     const updatedTodos = todos.filter((_, i) => i !== index);
     setTodos(updatedTodos);
@@ -70,7 +61,7 @@ const Dashboard = () => {
   // Handle logout
   const handleLogout = () => {
     logout();
-    navigate("/");  // Redirect to login page
+    navigate("/");
   };
 
   return (
@@ -118,7 +109,7 @@ const Dashboard = () => {
           todos.map((todo, index) => (
             <li
               key={index}
-              className={`p-4 bg-white shadow-sm rounded-lg ${todo.completed ? "line-through text-gray-500" : ""}`}
+              className="p-4 bg-white shadow-sm rounded-lg"
             >
               {editIndex === index ? (
                 <div className="space-y-2">
@@ -188,12 +179,14 @@ const Dashboard = () => {
                     >
                       {todo.completed ? "Mark as Incomplete" : "Mark as Completed"}
                     </button>
-                    <button
-                      onClick={() => setEditIndex(index)}
-                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                    >
-                      Edit
-                    </button>
+                    {!todo.completed && (
+                      <button
+                        onClick={() => setEditIndex(index)}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                      >
+                        Edit
+                      </button>
+                    )}
                     <button
                       onClick={() => handleDeleteTodo(index)}
                       className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none"
